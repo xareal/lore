@@ -1,4 +1,4 @@
 package com.xar.lore.model;
 
-public class VoteTyoe {
+public class VoteType {
 }

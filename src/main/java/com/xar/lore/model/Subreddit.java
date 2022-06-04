@@ -1,5 +1,19 @@
 package com.xar.lore.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+
+import java.time.Instant;
+import java.util.List;
+
+import static javax.persistence.FetchType.LAZY;
+import static javax.persistence.GenerationType.IDENTITY;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -7,7 +21,7 @@ package com.xar.lore.model;
 @Builder
 public class Subreddit {
 	@Id
-	@GeneratedValue(startegy = IDENTITY)
+	@GeneratedValue(strategy = IDENTITY)
 	private Long id;
 	@NotBlank(message = "Community name is required")
 	private String name;

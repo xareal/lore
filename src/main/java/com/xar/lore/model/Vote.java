@@ -1,19 +1,29 @@
 package com.xar.lore.model;
 
+import com.sun.istack.NotNull;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+
+import static javax.persistence.FetchType.LAZY;
+import static javax.persistence.GenerationType.IDENTITY;
+
 @Data
 @NoArgsConstructor
 @Entity
 @Builder
 public class Vote {
 	@Id
-	@GeneratedValue(startegy = IDENTITY)
+	@GeneratedValue(strategy = IDENTITY)
 	private Long voteId;
 	private VoteType voteType;
 	@NotNull
 	@ManyToOne(fetch = LAZY)
-	@JoinCollumn(name = "postId", referencedColumnName = "postId")
+	@JoinColumn(name = "postId", referencedColumnName = "postId")
 	private Post post;
 	@ManyToOne(fetch = LAZY)
-	@JoinCollumn(name = "userId", referencedColumnName = "userId")
+	@JoinColumn(name = "userId", referencedColumnName = "userId")
 	private User user;
 }
