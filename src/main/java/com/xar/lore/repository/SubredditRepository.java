@@ -1,4 +1,9 @@
 package com.xar.lore.repository;
 
-public interface SubredditRepository {
+import com.xar.lore.model.Subreddit;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface SubredditRepository extends JpaRepository<Subreddit, Long> {
 }
