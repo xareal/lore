@@ -14,5 +14,17 @@ import javax.validation.Valid;
 
 import static org.springframework.http.HttpStatus.OK;
 
+@RestController
+@RequestMapping("/api/auth")
 public class AuthController {
+
+	private final AuthService authService;
+
+	@PostMapping("/signup")
+	public void signup(@RequestBody RegisterRequest registerRequest) {
+		authService.signup(registerRequest);
+		return new ResponseEntity<>("User Registration Successful", 
+				HttpStatus.OK);
+		 
+	}
 }

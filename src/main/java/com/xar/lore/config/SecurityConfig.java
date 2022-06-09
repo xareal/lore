@@ -31,5 +31,22 @@ import org.springframework.security.oauth2.server.resource.web.access.BearerToke
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 
-public class SecurityConfig {
+@EnableWebSecurity
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+	@Override
+	public void configure(HttpSecurity httpSecurity) throws Exception {
+		httpSecurity.csrf().disable()
+				.authorizeRequests()
+				.antMatchers("/api/auth/**")
+				.permitAll()
+				.anyRequest()
+				.authenticated();
+	}
+
+	@Bean
+	PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
 }
