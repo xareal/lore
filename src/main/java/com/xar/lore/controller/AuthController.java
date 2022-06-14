@@ -27,4 +27,11 @@ public class AuthController {
 				HttpStatus.OK);
 		 
 	}
+
+	@GetMapping("accountVerification/{token}")
+	public ResponseEntity<String> verifyAccount(@PathVariable String token) {
+		authService.verifyAccount(token);
+	}
 }
+
+

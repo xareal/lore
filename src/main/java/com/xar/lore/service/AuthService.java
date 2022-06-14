@@ -4,7 +4,7 @@ import com.xar.lore.dto.AuthenticationResponse;
 import com.xar.lore.dto.LoginRequest;
 import com.xar.lore.dto.RefreshTokenRequest;
 import com.xar.lore.dto.RegisterRequest;
-import com.xar.lore.exceptions.SpringRedditException;
+import com.xar.lore.exceptions.LoreException;
 import com.xar.lore.model.NotificationEmail;
 import com.xar.lore.model.User;
 import com.xar.lore.model.VerificationToken;
@@ -61,5 +61,19 @@ public class AuthService {
 
 		verificationTokenRepository.save(verificationToken);
 		return token;
+	}
+
+	public void verifyAccount(String token) {
+		Optional<VerificationToken> verificationToken = verificationTokenRepository.findByToken(token);
+		verificationToken.orElseThrow(() -> new LoreException("Invalid Token"));
+		fetchUserAndEnable(verificationToken.get());
+	}
+
+	@Transactional
+	private void fetchUserAndEnable(VerificationToken verificationToken) {
+		String username = verificationToken.getUsername();
+		User user = userRepository.findByUsername(username).orElseThrow(() -> new LoreException("User not found with name - " + username));
+		user.setEnabled(true);
+		userRepository.save(user);
 	}
 }
