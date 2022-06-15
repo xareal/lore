@@ -34,6 +34,7 @@ public class AuthService {
 	private final UserRepository userRepository;
 	private final VerificationTokenRepository verificationTokenRepository;
 	private final MailService mailService;
+	private final AuthenticationManager authenticationManager;
 
 	@Transactional
 	public void signup(RegisterRequest registerRequest) {
@@ -75,5 +76,9 @@ public class AuthService {
 		User user = userRepository.findByUsername(username).orElseThrow(() -> new LoreException("User not found with name - " + username));
 		user.setEnabled(true);
 		userRepository.save(user);
+	}
+
+	public void login(LoginRequest loginRequest) {
+
 	}
 }

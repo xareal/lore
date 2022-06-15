@@ -32,7 +32,10 @@ import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 
 @EnableWebSecurity
+@AllArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+	private final UserDetailsService userDetailsService;
 
 	@Override
 	public void configure(HttpSecurity httpSecurity) throws Exception {
@@ -42,6 +45,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.permitAll()
 				.anyRequest()
 				.authenticated();
+	}
+
+	@Autowired
+	public void configureGobal(AuthenticationManagerBuilder authenticationManagerBuilder) {
+		authenticationManagerBuilder.UserDetailsService(userDetailsService)
+				.passwordEncoder(passwordEncoder());
 	}
 
 	@Bean
