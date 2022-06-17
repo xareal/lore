@@ -7,5 +7,10 @@ import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class AuthenticationResponse {
+	private String authnticationToken;
+	private String username;
 }

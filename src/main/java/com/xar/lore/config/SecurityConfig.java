@@ -37,6 +37,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private final UserDetailsService userDetailsService;
 
+	@Bean(BeanIds.AUTHENTICATION_MANAGER)
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
+
 	@Override
 	public void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.csrf().disable()
@@ -49,7 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	public void configureGobal(AuthenticationManagerBuilder authenticationManagerBuilder) {
-		authenticationManagerBuilder.UserDetailsService(userDetailsService)
+		authenticationManagerBuilder.userDetailsService(userDetailsService)
 				.passwordEncoder(passwordEncoder());
 	}
 

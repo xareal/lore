@@ -35,6 +35,7 @@ public class AuthService {
 	private final VerificationTokenRepository verificationTokenRepository;
 	private final MailService mailService;
 	private final AuthenticationManager authenticationManager;
+	private final JwtProvider jwtProvider;
 
 	@Transactional
 	public void signup(RegisterRequest registerRequest) {
@@ -79,6 +80,10 @@ public class AuthService {
 	}
 
 	public void login(LoginRequest loginRequest) {
-
+		Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), 
+				loginRequest.getPassword()));
+		SecurityContextHolder.getContext().setAuthentication(authenticate);
+		String token = jwtProvider.generatedToken(authenticate);
+		return new AuthenticationResponse(token, loginRequest.getUsername());
 	}
 }
